@@ -124,7 +124,10 @@ async def cmd_status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
 # ── main ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
-    app = Application.builder().token(config.BOT_TOKEN).build()
+    builder = Application.builder().token(config.BOT_TOKEN)
+    if config.PROXY_URL:
+        builder = builder.proxy(config.PROXY_URL)
+    app = builder.build()
 
     app.add_handler(CommandHandler("start", cmd_start))
     app.add_handler(CommandHandler("review", cmd_review))

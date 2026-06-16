@@ -1,9 +1,11 @@
 import random
 import re
+import httpx
 from openai import AsyncOpenAI
 import config
 
-_client = AsyncOpenAI(api_key=config.OPENAI_API_KEY)
+_http_client = httpx.AsyncClient(proxy=config.PROXY_URL) if config.PROXY_URL else None
+_client = AsyncOpenAI(api_key=config.OPENAI_API_KEY, http_client=_http_client)
 
 _PERSONAS = [
     "молодая мама (28-35 лет), заботится о здоровье детей, пишет просто и тепло",
